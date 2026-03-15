@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROGRAMME CAEN - PRÉCIS</title>
+    <style>
+        :root { --blue: #0055A4; --red: #EF4135; --dark: #1a1a1a; --grey: #f8f9fa; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #cfd8dc; margin: 0; padding: 10px; color: var(--dark); }
+        .card { max-width: 550px; margin: auto; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+        
+        /* En-tête */
+        .header { background: var(--blue); color: white; padding: 20px; text-align: center; border-bottom: 4px solid var(--red); }
+        .header h1 { margin: 0; font-size: 22px; text-transform: uppercase; }
+        .header p { margin: 5px 0 0; font-size: 14px; opacity: 0.9; }
+
+        /* Infos Trains */
+        .train-table { width: 100%; background: #003d7a; color: white; border-collapse: collapse; font-size: 13px; }
+        .train-table td { padding: 10px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
+        .train-table b { color: #ffeb3b; }
+
+        /* Corps du programme */
+        .section { padding: 15px; border-bottom: 1px solid #eee; }
+        .section-title { font-size: 11px; font-weight: 900; color: #777; text-transform: uppercase; margin-bottom: 15px; display: block; letter-spacing: 1px; }
+
+        .event { display: flex; margin-bottom: 20px; align-items: flex-start; }
+        .schedule { min-width: 95px; background: var(--grey); padding: 5px; border-radius: 5px; text-align: center; border-left: 3px solid var(--red); }
+        .schedule .start { display: block; font-weight: bold; color: var(--red); font-size: 14px; }
+        .schedule .end { display: block; font-size: 11px; color: #666; margin-top: 2px; }
+
+        .details { flex: 1; padding-left: 15px; }
+        .details h3 { margin: 0; font-size: 15px; color: var(--blue); }
+        .details p { margin: 5px 0; font-size: 13px; line-height: 1.4; }
+
+        /* Badges et Visuels */
+        .img-placeholder { width: 100%; height: 140px; border-radius: 8px; margin: 10px 0; object-fit: cover; border: 1px solid #eee; }
+        .tag { display: inline-block; font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 4px; margin-right: 5px; text-transform: uppercase; }
+        .tag-walk { background: #ffebee; color: #c62828; }
+        .tag-bus { background: #e3f2fd; color: #1565c0; }
+        
+        .footer { background: var(--dark); color: white; text-align: center; padding: 15px; font-size: 12px; }
+        .price-box { background: #fffde7; border: 1px solid #fbc02d; padding: 8px; border-radius: 5px; font-size: 12px; margin-top: 5px; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="header">
+        <h1>Rouen ➔ Caen : 21 Avril</h1>
+        <p>Organisation Militaire - Team Rives-en-Seine</p>
+    </div>
+
+    <table class="train-table">
+        <tr>
+            <td>🚆 ALLER : <b>08h15</b> (Rouen RD)</td>
+            <td>🚆 RETOUR : <b>18h03</b> (Caen)</td>
+        </tr>
+    </table>
+
+    <div class="section">
+        <span class="section-title">1. Approche Rouen Rive Droite</span>
+        <div class="event">
+            <div class="schedule">
+                <span class="start">06h45</span>
+                <span class="end">07h35</span>
+            </div>
+            <div class="details">
+                <h3>Trajet Rives-en-Seine ➔ Rouen</h3>
+                <p>Voiture vers <b>Parking P+R Mont-Riboudet</b>. (Gratuit avec titre transport).</p>
+            </div>
+        </div>
+        <div class="event">
+            <div class="schedule">
+                <span class="start">07h40</span>
+                <span class="end">08h05</span>
+            </div>
+            <div class="details">
+                <h3>TEOR + Métro</h3>
+                <p>T1/T2/T3 (Mont-Riboudet ➔ Théâtre des Arts) puis Métro (➔ Gare Rue Verte).</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <span class="section-title">2. Arrivée & Transit Mer</span>
+        <div class="event">
+            <div class="schedule">
+                <span class="start">09h57</span>
+                <span class="end">10h15</span>
+            </div>
+            <div class="details">
+                <h3>Arrivée Gare de Caen</h3>
+                <p>Sortie "Place de la Gare". Marcher vers le Quai 3.</p>
+                <img src="Gare de Caen.jpg" class="img-placeholder">
+            </div>
+        </div>
+        <div class="event">
+            <div class="schedule">
+                <span class="start">10h19</span>
+                <span class="end">11h00</span>
+            </div>
+            <div class="details">
+                <h3>Bus Ligne 12 (Aller)</h3>
+                <p><span class="tag tag-bus">Bus</span> Monter : <b>Gare SNCF</b><br>Descendre : <b>Général Leclerc</b> (Ouistreham).</p>
+                <div class="price-box">🎫 1,70€ (Appli Twisto ou SMS "1H" au 93014)</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" style="background: #fffcf5;">
+        <span class="section-title">3. Pique-Nique à la mer</span>
+        <div class="event">
+            <div class="schedule">
+                <span class="start">11h00</span>
+                <span class="end">11h16</span>
+            </div>
+            <div class="details">
+                <h3>Marche vers la plage</h3>
+                <p><span class="tag tag-walk">Marche</span> 16 min via l'Avenue de la Mer.</p>
+            </div>
+        </div>
+        <div class="event">
+            <div class="schedule">
+                <span class="start">11h20</span>
+                <span class="end">13h20</span>
+            </div>
+            <div class="details">
+                <h3>Pique-nique & Détente</h3>
+                <p>Installation sur le sable face aux cabines blanches.</p>
+                <img src="Ouistreham Riva Bella.jpg.webp" class="img-placeholder">
+            </div>
+        </div>
+        <div class="event">
+            <div class="schedule">
+                <span class="start">13h25</span>
+                <span class="end">13h41</span>
+            </div>
+            <div class="details">
+                <h3>Marche vers le bus</h3>
+                <p><span class="tag tag-walk">Marche</span> 16 min vers l'arrêt <b>Riva Centre</b>.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <span class="section-title">4. Après-midi à Caen</span>
+        <div class="event">
+            <div class="schedule">
+                <span class="start">13h56</span>
+                <span class="end">14h35</span>
+            </div>
+            <div class="details">
+                <h3>Bus Ligne 12 (Retour)</h3>
+                <p><span class="tag tag-bus">Bus</span> Monter : <b>Riva Centre</b><br>Descendre : <b>Tour Leroy (Caen)</b>.</p>
+            </div>
+        </div>
+        <div class="event">
+            <div class="schedule">
+                <span class="start">14h40</span>
+                <span class="end">16h00</span>
+            </div>
+            <div class="details">
+                <h3>Château & Remparts</h3>
+                <p>Montée immédiate sur les remparts (accès à 50m de l'arrêt).</p>
+                <img src="Chateau Caen.jpg" class="img-placeholder">
+            </div>
+        </div>
+        <div class="event">
+            <div class="schedule">
+                <span class="start">16h00</span>
+                <span class="end">16h40</span>
+            </div>
+            <div class="details">
+                <h3>Quartier du Vaugueux</h3>
+                <p>Balade dans les rues médiévales au pied du château.</p>
+                <img src="quatiervaugueux.jpeg" class="img-placeholder">
+            </div>
+        </div>
+    </div>
+
+    <div class="section" style="background: #fdfdfd;">
+        <span class="section-title">5. Goûter & Départ</span>
+        <div class="event">
+            <div class="schedule">
+                <span class="start">16h45</span>
+                <span class="end">17h40</span>
+            </div>
+            <div class="details">
+                <h3>Goûter au Port</h3>
+                <p><span class="tag tag-walk">Marche 15min</span> Direction le Bassin St-Pierre (ex: Keys & Co).</p>
+            </div>
+        </div>
+        <div class="event">
+            <div class="schedule">
+                <span class="start">17h40</span>
+                <span class="end">17h55</span>
+            </div>
+            <div class="details">
+                <h3>Marche finale Gare</h3>
+                <p><span class="tag tag-walk">Marche 15min</span> Retour vers la Gare SNCF.</p>
+            </div>
+        </div>
+        <div class="event">
+            <div class="schedule">
+                <span class="start">18h03</span>
+                <span class="end">19h42</span>
+            </div>
+            <div class="details">
+                <h3>Train Retour</h3>
+                <p>Départ Caen 18h03 ➔ Arrivée Rouen 19h42.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <b>ARCHI IMPORTANT :</b> Checkez le quai dès l'arrivée en gare.<br>
+        Billet Nomad + Carte d'identité obligatoires.
+    </div>
+</div>
+
+</body>
+</html>
