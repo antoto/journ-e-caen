@@ -3,264 +3,339 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EXPÉDITION CAEN - 21 AVRIL</title>
+    <title>CAEN EXPÉDITION | 21 AVRIL</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        :root { --blue: #0055A4; --red: #EF4135; --dark: #1a1a1a; --grey: #f8f9fa; --white: #ffffff; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: #cfd8dc; margin: 0; padding: 10px; color: var(--dark); }
-        .card { max-width: 600px; margin: auto; background: var(--white); border-radius: 15px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
-        
-        .header { background: var(--blue); color: white; padding: 20px; text-align: center; border-bottom: 4px solid var(--red); }
-        .header h1 { margin: 0; font-size: 24px; text-transform: uppercase; letter-spacing: 2px; }
-        
-        #map { height: 400px; width: 100%; border-bottom: 2px solid #ddd; }
-
-        .number-icon {
-            background: var(--red);
-            border: 2px solid white;
-            border-radius: 50%;
-            color: white;
-            font-weight: bold;
-            text-align: center;
-            line-height: 20px;
-            font-size: 12px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+        :root {
+            --primary: #2563eb;
+            --accent: #ef4444;
+            --bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --success: #16a34a;
         }
 
-        .train-table { width: 100%; background: #003d7a; color: white; border-collapse: collapse; font-size: 14px; }
-        .train-table td { padding: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
-        .train-table b { color: #ffeb3b; font-size: 16px; }
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background: var(--bg); 
+            margin: 0; 
+            padding: 10px; 
+            color: var(--text);
+        }
 
-        .section { padding: 20px; border-bottom: 1px solid #eee; }
-        .section-title { font-size: 12px; font-weight: 900; color: #777; text-transform: uppercase; margin-bottom: 15px; display: block; border-left: 4px solid var(--red); padding-left: 10px; }
+        .container { max-width: 600px; margin: auto; }
 
-        .event { display: flex; margin-bottom: 25px; align-items: flex-start; }
-        .schedule { min-width: 100px; background: var(--grey); padding: 8px; border-radius: 8px; text-align: center; border: 1px solid #ddd; }
-        .schedule .start { display: block; font-weight: bold; color: var(--red); font-size: 15px; }
-        .schedule .end { display: block; font-size: 11px; color: #666; margin-top: 4px; border-top: 1px solid #ddd; padding-top: 4px; }
+        .main-header {
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: white;
+            padding: 25px 15px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 15px;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
+        }
 
-        .details { flex: 1; padding-left: 20px; }
-        .details h3 { margin: 0; font-size: 17px; color: var(--blue); }
-        .details p { margin: 6px 0; font-size: 14px; line-height: 1.5; }
+        #map { 
+            height: 300px; 
+            border-radius: 20px; 
+            margin-bottom: 15px; 
+            border: 3px solid white;
+        }
 
-        .img-box { width: 100%; height: 160px; border-radius: 10px; margin: 10px 0; object-fit: cover; background: #eee; border: 1px solid #ddd; }
+        .train-asset {
+            width: 100%;
+            height: auto;
+            max-width: 810px;
+            display: block;
+            margin: 12px auto;
+            border-radius: 6px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .step {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 12px;
+            display: flex;
+            gap: 12px;
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .time-box {
+            min-width: 80px;
+            text-align: center;
+            border-right: 2px solid #f1f5f9;
+            padding-right: 12px;
+        }
+
+        .time-start { display: block; font-weight: 800; color: var(--primary); font-size: 17px; }
+        .time-end { display: block; font-size: 11px; color: #64748b; margin-top: 2px; }
+
+        .content { flex: 1; }
+        .content h3 { margin: 0 0 8px 0; font-size: 16px; color: #0f172a; }
         
-        .tag { display: inline-block; font-size: 11px; font-weight: bold; padding: 4px 10px; border-radius: 20px; margin-top: 5px; text-transform: uppercase; }
-        .tag-walk { background: #efebe9; color: #5d4037; }
-        .tag-bus { background: #e3f2fd; color: #1565c0; }
-        .tag-train { background: #fff3e0; color: #e65100; }
-        .tag-car { background: #f3e5f5; color: #7b1fa2; }
-        
-        .footer { background: var(--dark); color: white; text-align: center; padding: 20px; font-size: 13px; }
-        .price-box { background: #fffde7; border: 1px solid #fbc02d; padding: 10px; border-radius: 8px; font-size: 13px; margin-top: 8px; }
-        .line-label { background: rgba(255,255,255,0.9); border: 1px solid #999; font-size: 10px; padding: 1px 4px; font-weight: bold; border-radius: 3px; }
+        .note-box {
+            background: #f8fafc;
+            border-left: 3px solid #cbd5e1;
+            padding: 8px 12px;
+            margin: 10px 0;
+            font-size: 13px;
+            color: #475569;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .important { color: var(--accent); font-weight: bold; }
+
+        .img-preview {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin: 10px 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 99px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .badge-walk { background: #fef2f2; color: #dc2626; }
+        .badge-bus { background: #eff6ff; color: #2563eb; }
+        .badge-train { background: #fdf4ff; color: #a21caf; }
+
+        .maps-btn {
+            display: inline-flex;
+            align-items: center;
+            background: var(--success);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .footer { text-align: center; padding: 20px; font-size: 11px; color: #94a3b8; }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <div class="header">
-        <h1>Rouen ➔ Caen</h1>
-        <p>Mardi 21 avril 2026</p>
-    </div>
+<div class="container">
+    <header class="main-header">
+        <h1>JOURNÉE CAEN</h1>
+        <p>21 AVRIL • ROUEN ➔ CAEN ➔ OUISTREHAM</p>
+    </header>
 
     <div id="map"></div>
 
-    <table class="train-table">
-        <tr>
-            <td>🚆 ALLER : <b>08h15</b></td>
-            <td>🚆 RETOUR : <b>18h03</b></td>
-        </tr>
-    </table>
-
-    <div class="section">
-        <span class="section-title">1. Approche Gare de Rouen</span>
-        <div class="event">
-            <div class="schedule">
-                <span class="start">06h45</span>
-                <span class="end">07h35</span>
-            </div>
-            <div class="details">
-                <h3>Départ Domicile</h3>
-                <p>Trajet voiture vers <b>Parking P+R Mont-Riboudet</b>.</p>
-                <span class="tag tag-car">🚗 50 min</span>
-            </div>
+    <div class="step">
+        <div class="time-box">
+            <span class="time-start">08:45</span>
+            <span class="time-end">09:35</span>
         </div>
-        <div class="event">
-            <div class="schedule">
-                <span class="start">07h40</span>
-                <span class="end">08h05</span>
+        <div class="content">
+            <h3>🚗 Mise en route</h3>
+            <p>Départ domicile vers <b>P+R Boulingrin</b>.</p>
+            <div class="note-box">
+                💡 <b>Note :</b> Valider carte Astuce à l'entrée du parking.
             </div>
-            <div class="details">
-                <h3>TEOR & Métro</h3>
-                <p>T1/T2/T3 vers Théâtre des Arts, puis Métro vers Gare Rue Verte.</p>
-                <span class="tag tag-bus">🚌 25 min</span>
+            <span class="badge badge-walk">50 min de route</span>
+        </div>
+    </div>
+
+    <div class="step">
+        <div class="time-box">
+            <span class="time-start">09:35</span>
+            <span class="time-end">09:50</span>
+        </div>
+        <div class="content">
+            <h3>🚶 Liaison Gare</h3>
+            <p>Marche rapide de Boulingrin vers la <b>Gare Rive Droite</b>.</p>
+            <div class="note-box">
+                ⚠️ <span class="important">Attention :</span> Arrivée prévue 15 min avant le départ du train.
             </div>
         </div>
     </div>
 
-    <div class="section">
-        <span class="section-title">2. Voyage & Transit Mer</span>
-        <div class="event">
-            <div class="schedule">
-                <span class="start">08h15</span>
-                <span class="end">09h57</span>
-            </div>
-            <div class="details">
-                <h3>Train Nomad (Aller)</h3>
-                <img src="Gare de Caen.jpg" class="img-box">
-                <p>Trajet direct Rouen RD ➔ Caen.</p>
-                <span class="tag tag-train">🚆 1h42</span>
-            </div>
+    <div class="step" style="border-left: 4px solid #a21caf;">
+        <div class="time-box">
+            <span class="time-start">10:04</span>
+            <span class="time-end">11:47</span>
         </div>
-        <div class="event">
-            <div class="schedule">
-                <span class="start">10h19</span>
-                <span class="end">11h00</span>
+        <div class="content">
+            <h3>🚆 Train Nomad n°____</h3>
+            <img src="comp_caen_aller.png" class="train-asset">
+        </div>
+    </div>
+
+    <div class="step">
+        <div class="time-box">
+            <span class="time-start">12h00</span>
+            <span class="time-end">12h45</span>
+        </div>
+        <div class="content">
+            <h3>🚌 Bus Twisto - Ligne 12</h3>
+            <img src="Gare de Caen.jpg" class="img-preview" alt="Sortie Gare de Caen">
+            
+            <div class="note-box">
+                📍 <b>Point de ralliement :</b> Sortir côté "Centre-Ville", traverser l'esplanade. Le bus part du <b>Quai n°3</b>.<br>
+                🏁 <b>Direction :</b> "Lion-sur-Mer" (via Ouistreham).<br>
+                🛑 <b>Arrêt de descente :</b> "Riva Centre" (Le cœur de Ouistreham).
             </div>
-            <div class="details">
-                <h3>Bus Ligne 12 (Aller)</h3>
-                <p><b>Gare SNCF</b> vers <b>Général Leclerc</b> (Ouistreham).</p>
-                <span class="tag tag-bus">🚌 41 min</span>
+
+            <div class="price-box" style="background: #f0f9ff; border: 1px solid #bae6fd; padding: 12px; border-radius: 12px; font-size: 13px; margin: 10px 0;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                    <span style="font-size: 18px;">📱</span>
+                    <b style="color: #0369a1;">Application TWISTO</b>
+                </div>
+                <div style="display: flex; justify-content: space-between; background: white; padding: 8px; border-radius: 8px; margin-bottom: 5px; border: 1px solid #e0f2fe;">
+                    <span>🎫 <b>Ticket 1h</b> (Unitaire)</span>
+                    <b style="color: #059669;">1,60€</b>
+                </div>
+                <div style="display: flex; justify-content: space-between; background: white; padding: 8px; border-radius: 8px; border: 1px solid #e0f2fe;">
+                    <span>🎟️ <b>Ticket 24h</b> (Illimité)</span>
+                    <b style="color: #059669;">4,00€</b>
+                </div>
+            </div>
+
+            <span class="badge badge-bus">⏱️ 45m Bus + 15min Marche</span>
+        </div>
+    </div>
+
+    
+
+    <div class="step" style="background: #fffcf0;">
+        <div class="time-box">
+            <span class="time-start">13:00</span>
+            <span class="time-end">15:45</span>
+        </div>
+        <div class="content">
+            <h3>🏖️ Riva Bella (Plage)</h3>
+            <img src="Ouistreham Riva Bella.jpg.webp" class="img-preview">
+            <p>Pique-nique face à la Manche.</p>
+            <div class="note-box">
+                🧺 <b>A voir :</b> Il y a peut êtr edes bunker de la guerre et on pourra apercevoir (normalement) les restes du Mur de l'Atlantique. 
             </div>
         </div>
     </div>
 
-    <div class="section" style="background: #fffcf5;">
-        <span class="section-title">3. Pique-Nique Riva Bella</span>
-        <div class="event">
-            <div class="schedule">
-                <span class="start">11h00</span>
-                <span class="end">13h25</span>
-            </div>
-            <div class="details">
-                <h3>Plage de Ouistreham</h3>
-                <img src="Ouistreham Riva Bella.jpg.webp" class="img-box">
-                <p>Installation sur le sable et pique-nique.</p>
-                <span class="tag tag-walk">🚶‍♂️ 16 min marche aller</span>
-            </div>
+    <div class="step">
+        <div class="time-box">
+            <span class="time-start">16:00</span>
+            <span class="time-end">16:45</span>
         </div>
-        <div class="event">
-            <div class="schedule">
-                <span class="start">13h41</span>
-                <span class="end">14h35</span>
+        <div class="content">
+            <h3>🚌 Retour Caen</h3>
+            <p>Ligne 12 : Arrêt <b>Riva Centre</b> ➔ <b>Tour Leroy</b>.</p>
+            <span class="badge badge-walk">15 min de marche plage vers l'arrêt de bus.</span>
+        </div>
+    </div>
+
+    <div class="step" style="border-left: 4px solid var(--success);">
+        <div class="time-box">
+            <span class="time-start">16:50</span>
+            <span class="time-end">17:30</span>
+        </div>
+        <div class="content">
+            <h3>🥐 Goûter </h3>
+            <p><b>La Brioche Chaude</b></p>
+            <div class="note-box">
             </div>
-            <div class="details">
-                <h3>Bus Ligne 12 (Retour)</h3>
-                <p><b>Riva Centre</b> vers <b>Tour Leroy</b> (Caen).</p>
-                <span class="tag tag-bus">🚌 54 min</span>
+            <a href="https://maps.app.goo.gl/Lpbcipe6jV64cwzi7" class="maps-btn" target="_blank">📍 Ouvrir l'itinéraire Maps</a>
+        </div>
+    </div>
+
+    <div class="step">
+        <div class="time-box">
+            <span class="time-start">17:30</span>
+            <span class="time-end">19:00</span>
+        </div>
+        <div class="content">
+            <h3>🏰 Château & Remparts</h3>
+            <img src="Chateau Caen.jpg" class="img-preview">
+            <p>Balade libre : Donjon, Remparts et Quartier Vaugueux.</p>
+            <div class="note-box">
+                📸 <b>Photo :</b> Monter sur les remparts nord pour la meilleure vue sur le Vaugueux.
             </div>
         </div>
     </div>
 
-    <div class="section">
-        <span class="section-title">4. Château & Goûter</span>
-        <div class="event">
-            <div class="schedule">
-                <span class="start">14h40</span>
-                <span class="end">16h30</span>
-            </div>
-            <div class="details">
-                <h3>Château & Vaugueux</h3>
-                <img src="Chateau Caen.jpg" class="img-box">
-                <p>Visite du quartier (je ne sais pas ce qu'il y a comme boutiques) et visite sur les remparts du château.</p>
-            </div>
+    <div class="step" style="border-left: 4px solid #a21caf;">
+        <div class="time-box">
+            <span class="time-start">19:16</span>
+            <span class="time-end">20:56</span>
         </div>
-        <div class="event">
-            <div class="schedule">
-                <span class="start">16h35</span>
-                <span class="end">17h20</span>
-            </div>
-            <div class="details">
-                <h3>La Brioche Chaude</h3>
-                <p>Pause gourmande rue Neuve Saint-Jean.</p>
-                <span class="tag tag-walk">🚶‍♂️ 10 min marche</span>
-                <a href="https://maps.app.goo.gl/XJ3VnYESBL6zJWsa7" 
-                   target="_blank" 
-                   style="display: inline-block; margin-top: 10px; padding: 8px 15px; background-color: #34a853; color: white; text-decoration: none; border-radius: 5px; font-size: 12px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                   📍 Ouvrir dans Maps
-                </a>
+        <div class="content">
+            <h3>🚆 Train Nomad (Retour)</h3>
+            <img src="comp_caen_retour.png" class="train-asset">
+            <p>Retour vers Rouen Rive Droite.</p>
+            <div class="note-box">
+                💤 <b>Repos :</b> 1h40 de trajet.
             </div>
         </div>
     </div>
 
-    <div class="section" style="background: #fdfdfd;">
-        <span class="section-title">5. Fin de l'expédition</span>
-        <div class="event">
-            <div class="schedule">
-                <span class="start">17h20</span>
-                <span class="end">17h45</span>
-            </div>
-            <div class="details">
-                <h3>Marche vers la Gare</h3>
-                <p>Descente finale vers le quai.</p>
-                <span class="tag tag-walk">🚶‍♂️ 25 min (Marge sécu)</span>
-            </div>
+    <div class="step" style="background: #fff7ed;">
+        <div class="time-box">
+            <span class="time-start">21:10</span>
+            <span class="time-end">22:00</span>
         </div>
-        <div class="event">
-            <div class="schedule">
-                <span class="start">18h03</span>
-                <span class="end">19h42</span>
-            </div>
-            <div class="details">
-                <h3>Train Nomad (Retour)</h3>
-                <p>Départ Caen ➔ Arrivée Rouen RD.</p>
-                <span class="tag tag-train">🚆 1h39</span>
+        <div class="content">
+            <h3>🍔 Ravitaillement Final</h3>
+            <p><b>Burger King</b> (Gare ou proche).</p>
+            <div class="note-box">
+                🏃 <b>Dernière marche :</b> 12-15 min pour retourner au Parking Boulingrin après le BK.
             </div>
         </div>
     </div>
 
-    <div class="footer">
-        🚀 <b>Checklist :</b> Batterie chargée + Appareil Photo + Batteries externe !
-    </div>
+    <footer class="footer">
+        MAJ : 21/04/2024 • Document STRICTEMENT PERSONNEL • Force et Brioche !
+    </footer>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
     var map = L.map('map').setView([49.25, 0.4], 9);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(map);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png').addTo(map);
 
-    const pts = [
-        {c: [49.5020, 0.7881], n: "1", t: "Départ"},
-        {c: [49.4488, 1.0640], n: "2", t: "Mont Riboudet"},
-        {c: [49.4402, 1.0893], n: "3", t: "Théâtre des Arts"},
-        {c: [49.4486, 1.0940], n: "4", t: "Gare Rouen"},
-        {c: [49.1760, -0.3476], n: "5", t: "Gare Caen"},
-        {c: [49.2821, -0.2559], n: "6", t: "Général Leclerc"},
-        {c: [49.2899, -0.2539], n: "7", t: "Plage"},
-        {c: [49.2845, -0.2616], n: "8", t: "Riva Centre"},
-        {c: [49.1842, -0.3583], n: "9", t: "Tour Leroy"},
-        {c: [49.1852, -0.3617], n: "10", t: "Château"},
-        {c: [49.1856, -0.3597], n: "11", t: "Vaugueux"},
-        {c: [49.1831, -0.3593], n: "12", t: "Brioche Chaude"},
-        {c: [49.1760, -0.3476], n: "13", t: "Gare Retour"}
+    const spots = [
+        {c: [49.4475, 1.1031], n: "P", t: "Boulingrin"},
+        {c: [49.4486, 1.0940], n: "1", t: "Gare Rouen"},
+        {c: [49.1760, -0.3476], n: "2", t: "Gare Caen"},
+        {c: [49.2899, -0.2539], n: "3", t: "Plage"},
+        {c: [49.1831, -0.3593], n: "4", t: "Brioche"},
+        {c: [49.1852, -0.3617], n: "5", t: "Château"}
     ];
 
-    pts.forEach(p => {
-        let icon = L.divIcon({className: 'number-icon', html: p.n, iconSize: [22, 22]});
-        L.marker(p.c, {icon: icon}).addTo(map).bindTooltip(p.t);
+    spots.forEach(s => {
+        let icon = L.divIcon({className: 'number-icon', html: s.n, iconSize: [24, 24]});
+        L.marker(s.c, {icon: icon}).addTo(map).bindTooltip(s.t);
     });
 
-    function addLine(c1, c2, color, label) {
-        let line = L.polyline([c1, c2], {color: color, weight: 4, opacity: 0.8}).addTo(map);
-        line.bindTooltip(label, {permanent: true, direction: 'center', className: 'line-label'});
-    }
-
-    // Trajet complet relié
-    addLine(pts[0].c, pts[1].c, '#7b1fa2', "🚗 50m");
-    addLine(pts[1].c, pts[2].c, '#1565c0', "🚌 10m"); // Le trait manquant ajouté ici
-    addLine(pts[2].c, pts[3].c, '#1565c0', "🚌 15m");
-    addLine(pts[3].c, pts[4].c, '#e65100', "🚆 1h42");
-    addLine(pts[4].c, pts[5].c, '#1565c0', "🚌 41m");
-    addLine(pts[5].c, pts[6].c, '#5d4037', "🚶 16m");
-    addLine(pts[6].c, pts[7].c, '#5d4037', "🚶 16m");
-    addLine(pts[7].c, pts[8].c, '#1565c0', "🚌 54m");
-    addLine(pts[8].c, pts[9].c, '#5d4037', "🚶 5m");
-    addLine(pts[9].c, pts[10].c, '#5d4037', "🚶 2m");
-    addLine(pts[10].c, pts[11].c, '#5d4037', "🚶 5m");
-    addLine(pts[11].c, pts[12].c, '#5d4037', "🚶 25m"); // Retour Gare
-
-    map.fitBounds(L.polyline(pts.map(p => p.c)).getBounds(), {padding: [30, 30]});
+    // Lignes de trajet
+    L.polyline([[49.4486, 1.0940], [49.1760, -0.3476]], {color: '#a21caf', weight: 4, dashArray: '8, 8'}).addTo(map);
+    L.polyline([[49.1760, -0.3476], [49.2899, -0.2539]], {color: '#2563eb', weight: 3}).addTo(map);
 </script>
+
+<style>
+    .number-icon {
+        background: var(--primary);
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 24px;
+        font-weight: bold;
+        font-size: 11px;
+        border: 2px solid white;
+    }
+</style>
+
 </body>
 </html>
