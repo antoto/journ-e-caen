@@ -121,6 +121,19 @@
             margin-top: 5px;
         }
 
+        .table-dépenses {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 20px;
+            font-size: 13px;
+        }
+        .table-dépenses th { background: #1e293b; color: white; padding: 12px; text-align: left; }
+        .table-dépenses td { padding: 12px; border-bottom: 1px solid #eee; }
+        .total-row { background: #f1f5f9; font-weight: bold; }
+
         .footer { text-align: center; padding: 20px; font-size: 11px; color: #94a3b8; }
     </style>
 </head>
@@ -128,6 +141,9 @@
 
 <div class="container">
     <header class="main-header">
+        <div style="background: #ef4444; color: white; display: inline-block; padding: 5px 15px; border-radius: 10px; font-size: 12px; font-weight: bold; margin-bottom: 10px;">
+            ⚠️ RÉSERVATION TRAIN : Mercredi 15 Avril à 11h00
+        </div>
         <h1>JOURNÉE CAEN</h1>
         <p>21 AVRIL • ROUEN ➔ CAEN ➔ OUISTREHAM</p>
     </header>
@@ -141,9 +157,9 @@
         </div>
         <div class="content">
             <h3>🚗 Mise en route</h3>
-            <p>Départ domicile vers <b>P+R Boulingrin</b>.</p>
+            <p>Départ domicile vers <b>P+R Mont Riboudet</b>.</p>
             <div class="note-box">
-                💡 <b>Note :</b> Valider carte Astuce à l'entrée du parking.
+                💡 <b>Note :</b> Le parking est gratuit avec validation titre Astuce.
             </div>
             <span class="badge badge-walk">50 min de route</span>
         </div>
@@ -152,13 +168,13 @@
     <div class="step">
         <div class="time-box">
             <span class="time-start">09:35</span>
-            <span class="time-end">09:50</span>
+            <span class="time-end">09:55</span>
         </div>
         <div class="content">
-            <h3>🚶 Liaison Gare</h3>
-            <p>Marche rapide de Boulingrin vers la <b>Gare Rive Droite</b>.</p>
+            <h3>🚌 Transit Rouen</h3>
+            <p>T1, T2 ou T3 jusqu'à <b>Théâtre des Arts</b> puis Métro vers <b>Gare Rue Verte</b>.</p>
             <div class="note-box">
-                ⚠️ <span class="important">Attention :</span> Arrivée prévue 15 min avant le départ du train.
+                ⚠️ <span class="important">Attention :</span> Arrivée à la gare vers 09h55 (9 min avant le départ).
             </div>
         </div>
     </div>
@@ -169,8 +185,9 @@
             <span class="time-end">11:47</span>
         </div>
         <div class="content">
-            <h3>🚆 Train Nomad n°____</h3>
+            <h3>🚆 Train Nomad n°3306</h3>
             <img src="comp_caen_aller.png" class="train-asset">
+            <p>Ligne Rouen RD ➔ Caen.</p>
         </div>
     </div>
 
@@ -186,7 +203,7 @@
             <div class="note-box">
                 📍 <b>Point de ralliement :</b> Sortir côté "Centre-Ville", traverser l'esplanade. Le bus part du <b>Quai n°3</b>.<br>
                 🏁 <b>Direction :</b> "Lion-sur-Mer" (via Ouistreham).<br>
-                🛑 <b>Arrêt de descente :</b> "Riva Centre" (Le cœur de Ouistreham).
+                🛑 <b>Arrêt de descente :</b> "Riva Centre".
             </div>
 
             <div class="price-box" style="background: #f0f9ff; border: 1px solid #bae6fd; padding: 12px; border-radius: 12px; font-size: 13px; margin: 10px 0;">
@@ -208,8 +225,6 @@
         </div>
     </div>
 
-    
-
     <div class="step" style="background: #fffcf0;">
         <div class="time-box">
             <span class="time-start">13:00</span>
@@ -220,7 +235,7 @@
             <img src="Ouistreham Riva Bella.jpg.webp" class="img-preview">
             <p>Pique-nique face à la Manche.</p>
             <div class="note-box">
-                🧺 <b>A voir :</b> Il y a peut êtr edes bunker de la guerre et on pourra apercevoir (normalement) les restes du Mur de l'Atlantique. 
+                🧺 <b>A voir :</b> Il y a peut-être des bunkers de la guerre et on pourra apercevoir les restes du Mur de l'Atlantique. 
             </div>
         </div>
     </div>
@@ -239,14 +254,12 @@
 
     <div class="step" style="border-left: 4px solid var(--success);">
         <div class="time-box">
-            <span class="time-start">16:50</span>
-            <span class="time-end">17:30</span>
+            <span class="time-start">16h50</span>
+            <span class="time-end">17h30</span>
         </div>
         <div class="content">
             <h3>🥐 Goûter </h3>
             <p><b>La Brioche Chaude</b></p>
-            <div class="note-box">
-            </div>
             <a href="https://maps.app.goo.gl/Lpbcipe6jV64cwzi7" class="maps-btn" target="_blank">📍 Ouvrir l'itinéraire Maps</a>
         </div>
     </div>
@@ -288,15 +301,63 @@
         </div>
         <div class="content">
             <h3>🍔 Ravitaillement Final</h3>
-            <p><b>Burger King</b> (Gare ou proche).</p>
+            <p><b>Burger King</b> (Gare Rouen RD).</p>
             <div class="note-box">
-                🏃 <b>Dernière marche :</b> 12-15 min pour retourner au Parking Boulingrin après le BK.
+                🏃 <b>Dernière marche :</b> 12-15 min pour retourner au P+R Riboudet via TEOR après le BK.
             </div>
         </div>
     </div>
 
+    <h3 style="margin-top: 30px; padding-left: 10px;">📊 Budget de l'expédition (Par personne)</h3>
+    <table class="table-dépenses">
+        <thead>
+            <tr>
+                <th>Poste</th>
+                <th>Détail</th>
+                <th>Prix</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Parking P+R Rouen</td>
+                <td>Mont Riboudet</td>
+                <td style="color: #16a34a; font-weight: bold;">GRATUIT</td>
+            </tr>
+            <tr>
+                <td>Transport Rouen</td>
+                <td>TEOR + Métro (A/R)</td>
+                <td style="color: #16a34a; font-weight: bold;">GRATUIT</td>
+            </tr>
+            <tr>
+                <td>Train Nomad</td>
+                <td>Rouen ➔ Caen (A/R)</td>
+                <td>??,?? €</td>
+            </tr>
+            <tr>
+                <td>Bus Twisto</td>
+                <td>Caen ➔ Ouistreham (A/R)</td>
+                <td>3,20 €</td>
+            </tr>
+            <tr>
+                <td>Goûter</td>
+                <td>La Brioche Chaude</td>
+                <td>~5,00 €</td>
+            </tr>
+            <tr>
+                <td>Dîner</td>
+                <td>Burger King</td>
+                <td>~12,00 €</td>
+            </tr>
+            <tr class="total-row">
+                <td>TOTAL ESTIMÉ</td>
+                <td>Hors billets train</td>
+                <td>~20,20 €</td>
+            </tr>
+        </tbody>
+    </table>
+
     <footer class="footer">
-        MAJ : 21/04/2024 • Document STRICTEMENT PERSONNEL • Force et Brioche !
+        MAJ : 13/04/2026 • Voyage le 21/04 • Document STRICTEMENT PERSONNEL
     </footer>
 </div>
 
@@ -306,7 +367,7 @@
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png').addTo(map);
 
     const spots = [
-        {c: [49.4475, 1.1031], n: "P", t: "Boulingrin"},
+        {c: [49.4488, 1.0640], n: "P", t: "Mont Riboudet"},
         {c: [49.4486, 1.0940], n: "1", t: "Gare Rouen"},
         {c: [49.1760, -0.3476], n: "2", t: "Gare Caen"},
         {c: [49.2899, -0.2539], n: "3", t: "Plage"},
@@ -319,7 +380,6 @@
         L.marker(s.c, {icon: icon}).addTo(map).bindTooltip(s.t);
     });
 
-    // Lignes de trajet
     L.polyline([[49.4486, 1.0940], [49.1760, -0.3476]], {color: '#a21caf', weight: 4, dashArray: '8, 8'}).addTo(map);
     L.polyline([[49.1760, -0.3476], [49.2899, -0.2539]], {color: '#2563eb', weight: 3}).addTo(map);
 </script>
